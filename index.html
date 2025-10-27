@@ -1,383 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Meow — The Best and Safest Executor</title>
-<meta name="description" content="Meow — fast, stable, and secure executor. Download now." />
-<style>
-  :root{
-    --bg:#000;
-    --panel: rgba(255,255,255,0.03);
-    --accent1: #ff69b4;
-    --accent2: #ff1493;
-    --muted: #9aa0a6;
-    --glass: rgba(255,255,255,0.04);
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0;
-    font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    background: linear-gradient(180deg,#050505 0%, #080407 60%);
-    color:#fff;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    overflow-x:hidden;
-  }
-
-  /* subtle backdrop texture (very faint) */
-  .bg-texture{
-    position:fixed; inset:0; pointer-events:none; z-index:0;
-    background-image: radial-gradient( circle at 10% 20%, rgba(255,20,147,0.03) 0px, transparent 40% ),
-                      radial-gradient( circle at 90% 80%, rgba(255,105,180,0.02) 0px, transparent 35% );
-    filter:blur(30px) saturate(120%);
-    mix-blend-mode:screen;
-  }
-
-  header{
-    position:relative; z-index:20;
-    display:flex; align-items:center; gap:16px;
-    padding:20px 18px; justify-content:center;
-  }
-  .logo {
-    display:flex; align-items:center; gap:12px;
-  }
-  .logo img{
-    width:56px; height:56px; object-fit:contain; border-radius:8px;
-    box-shadow: 0 6px 30px rgba(255,20,147,0.12), inset 0 -6px 16px rgba(0,0,0,0.6);
-    transition:transform .25s ease;
-  }
-  .logo img:hover{ transform:translateY(-3px) scale(1.03); }
-  .logo .brand{
-    font-weight:800; font-size:28px; line-height:1;
-    background:linear-gradient(90deg,var(--accent1),var(--accent2));
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    text-shadow:0 2px 18px rgba(255,20,147,0.08);
-  }
-  .logo .brand small{
-    display:block; font-weight:600; font-size:11px; color:var(--muted);
-    letter-spacing:0.06em; margin-top:2px;
-  }
-
-  main{position:relative; z-index:10; padding:18px; max-width:1100px; margin:0 auto;}
-
-  /* hero */
-  .hero{
-    text-align:center; padding:56px 18px 40px;
-  }
-  .hero h1{
-    font-size:44px; margin:0 0 8px; letter-spacing:-0.02em; line-height:1.02;
-    text-shadow: 0 6px 30px rgba(255,20,147,0.08);
-  }
-  .hero .lead{
-    color:var(--muted); font-size:18px; margin-bottom:22px;
-  }
-
-  /* CTA area */
-  .cta {
-    display:flex; gap:14px; align-items:center; justify-content:center; flex-wrap:wrap;
-    margin-top:18px;
-  }
-  .btn-download{
-    display:inline-flex; align-items:center; gap:12px;
-    background: linear-gradient(90deg,var(--accent1),var(--accent2));
-    color:#fff; padding:14px 20px; border-radius:12px; text-decoration:none;
-    font-weight:700; box-shadow: 0 18px 50px rgba(255,20,147,0.18);
-    transform:translateZ(0); transition:transform .22s ease, box-shadow .22s ease;
-    border: none;
-  }
-  .btn-download:hover{ transform:translateY(-4px); box-shadow:0 26px 70px rgba(255,20,147,0.26); }
-  .btn-secondary{
-    background:transparent; color:var(--muted); padding:12px 16px; border-radius:10px;
-    border:1px solid rgba(255,255,255,0.04); font-weight:600; text-decoration:none;
-  }
-
-  /* features grid */
-  .features{
-    display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:36px;
-  }
-  .feature{
-    background:var(--panel); border-radius:14px; padding:18px;
-    border:1px solid rgba(255,20,147,0.06); backdrop-filter: blur(6px);
-    transition: transform .22s ease, box-shadow .22s ease;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-  }
-  .feature:hover{ transform:translateY(-6px); box-shadow:0 18px 60px rgba(255,20,147,0.06); }
-  .feature h4{ color:var(--accent1); margin:0 0 8px; font-size:18px; }
-  .feature p{ color:var(--muted); margin:0; line-height:1.5; font-size:14px; }
-
-  /* comparison table */
-  .comparison{ margin:46px 0; }
-  .comparison h3{ text-align:center; margin-bottom:18px; font-size:22px; color:var(--accent1); }
-  .cmp-table{
-    width:100%; border-collapse:collapse; overflow:hidden; border-radius:12px;
-    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border:1px solid rgba(255,20,147,0.06);
-  }
-  .cmp-table th, .cmp-table td{ padding:14px 16px; text-align:left; font-size:14px; border-bottom:1px solid rgba(255,20,147,0.03); }
-  .cmp-table th{ color:var(--accent1); font-weight:700; background:rgba(255,20,147,0.02); }
-  .check{ color:#00ff88; font-weight:800; font-size:16px; }
-  .cross{ color:#ff4444; font-weight:800; font-size:16px; }
-
-  /* deep dive cards */
-  .deep{
-    padding:28px 0 48px;
-  }
-  .cards{
-    display:grid; gap:18px; grid-template-columns:repeat(3,1fr);
-  }
-  .card{
-    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-radius:12px; padding:18px; border:1px solid rgba(255,20,147,0.06);
-    transition: transform .28s cubic-bezier(.2,.9,.25,1), box-shadow .28s ease;
-    box-shadow:0 8px 30px rgba(0,0,0,0.6);
-  }
-  .card:hover{ transform:translateY(-8px); box-shadow:0 26px 80px rgba(255,20,147,0.08); }
-  .card .icon-wrap{ width:56px; height:56px; border-radius:10px; display:flex; align-items:center; justify-content:center;
-    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    margin-bottom:10px; box-shadow: inset 0 -6px 14px rgba(0,0,0,0.6);
-  }
-  .card h4{ margin:0 0 8px; color:var(--accent1); font-size:16px; }
-  .card p{ margin:0; color:var(--muted); font-size:14px; line-height:1.5; }
-
-  /* footer */
-  footer{ text-align:center; padding:28px 18px; color:var(--muted); font-size:13px; border-top:1px solid rgba(255,20,147,0.03); margin-top:18px; }
-
-  /* flying cats layer (will create elements dynamically) */
-  .flying-layer{ position:fixed; inset:0; pointer-events:none; z-index:5; overflow:visible; }
-  .f-cat{
-    position:absolute; font-size:26px; will-change: transform, opacity;
-    text-shadow: 0 6px 24px rgba(0,0,0,0.6);
-    opacity:0;
-    filter: drop-shadow(0 6px 18px rgba(255,20,147,0.12));
-  }
-
-  /* entrance animations */
-  .fade-up { animation:fadeUp .8s cubic-bezier(.2,.9,.25,1) both; }
-  @keyframes fadeUp {
-    from{ opacity:0; transform:translateY(10px) }
-    to{ opacity:1; transform:none }
-  }
-
-  /* responsiveness */
-  @media (max-width:980px){
-    .features{ grid-template-columns:repeat(2,1fr) }
-    .cards{ grid-template-columns:repeat(2,1fr) }
-    .hero h1{ font-size:38px; }
-  }
-  @media (max-width:680px){
-    header{ padding:12px }
-    .logo img{ width:46px; height:46px; }
-    .logo .brand{ font-size:20px }
-    .hero{ padding:32px 12px 22px }
-    .hero h1{ font-size:26px }
-    .features{ grid-template-columns:1fr }
-    .cards{ grid-template-columns:1fr }
-    .cards, .features{ gap:12px }
-    .btn-download{ padding:12px 16px; font-size:15px }
-  }
-
-  /* reduced motion */
-  @media (prefers-reduced-motion:reduce){
-    .card, .feature, .btn-download, .logo img{ transition:none !important; animation:none !important; }
-  }
-</style>
-</head>
-<body>
-  <div class="bg-texture" aria-hidden="true"></div>
-
-  <header>
-    <div class="logo" id="logoWrap">
-      <!-- Image will try to load MeowLogo.png; if it fails, JS will replace with fallback text -->
-      <img id="meowLogo" src="MeowLogo.png" alt="Meow logo" />
-      <div>
-        <div class="brand">Meow</div>
-        <small style="color:var(--muted)">Fast • Stable • Secure</small>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero fade-up" aria-labelledby="hero-title">
-      <h1 id="hero-title">The Best and Safest Executor — Starts Here.</h1>
-      <p class="lead">Fast, stable and built with privacy in mind. Get in, run scripts, and stay unseen.</p>
-
-      <div class="cta">
-        <a class="btn-download" href="https://mega.nz/file/PlBz3Y6Y#PqAhO-Bf2UfSgghMemQdnrctrLgJBgmWRj0Ezheayuw" target="_blank" rel="noopener noreferrer">
-          <!-- simple download icon (svg) -->
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v11" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 11l4 4 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 21H3" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Download Meow
-        </a>
-        <a class="btn-secondary" href="#" onclick="alert('This is a demo.'); return false">Learn more</a>
-      </div>
-
-      <div style="margin-top:22px; max-width:780px; margin-left:auto; margin-right:auto; color:var(--muted); font-size:13.8px">
-        <em>Note:</em> Always use tools responsibly. This page is a demo layout — check local laws and terms of service before use.
-      </div>
-    </section>
-
-    <section class="section fade-up" aria-labelledby="features-title">
-      <h2 id="features-title" class="section-title">What You Get with Meow Executor</h2>
-      <div class="features">
-        <div class="feature"><h4>Play with Zero Stress</h4><p>Our advanced anti-cheat bypass ensures you stay completely undetected at all times.</p></div>
-        <div class="feature"><h4>Simple & Intuitive Interface</h4><p>Clean layout, easy navigation — built so any player can jump in and get started quickly.</p></div>
-        <div class="feature"><h4>Fast, Optimized & Stable</h4><p>Minimal resource usage, instant response, and reliable execution across sessions.</p></div>
-      </div>
-    </section>
-
-    <section class="comparison fade-up" aria-labelledby="cmp-title">
-      <h3 id="cmp-title">Why Users Switch to Meow and Never Go Back</h3>
-      <table class="cmp-table" role="table" aria-label="Comparison table">
-        <thead>
-          <tr><th></th><th>Meow</th><th>Regular Executor</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Best Byfron Hyperion Bypass</td><td class="check">✓</td><td class="cross">✗</td></tr>
-          <tr><td>User-Friendly Interface</td><td class="check">✓</td><td class="cross">✗</td></tr>
-          <tr><td>Fast, Optimized, and Stable</td><td class="check">✓</td><td class="cross">✗</td></tr>
-          <tr><td>Beautiful Tabbed Script Editor</td><td class="check">✓</td><td class="cross">✗</td></tr>
-          <tr><td>No Key System</td><td class="check">✓</td><td class="cross">✗</td></tr>
-          <tr><td>Frequent Updates</td><td class="check">✓</td><td class="cross">✗</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section class="deep fade-up" aria-labelledby="deep-title">
-      <h2 id="deep-title">Dive Deeper into Meow’s Core Features</h2>
-      <p style="text-align:center; color:var(--muted); margin-bottom:16px;">Real features, practical benefits — all designed to keep your experience smooth and safe.</p>
-
-      <div class="cards">
-        <div class="card" role="article">
-          <div class="icon-wrap"><img src="MeowLogo.png" alt="" style="width:36px;height:36px;object-fit:contain;opacity:0.95"></div>
-          <h4>Best Byfron Hyperion Bypass</h4>
-          <p>Proven techniques to remain unnoticed by modern detection systems so your sessions stay uninterrupted.</p>
-        </div>
-
-        <div class="card" role="article">
-          <div class="icon-wrap"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-opacity="0.12" stroke-width="1.2"/></svg></div>
-          <h4>User-Friendly Interface</h4>
-          <p>Minimal learning curve, tabbed editor, and clear controls to focus on what's important — the game.</p>
-        </div>
-
-        <div class="card" role="article">
-          <div class="icon-wrap"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v8" stroke="currentColor" stroke-opacity="0.18" stroke-width="1.6" stroke-linecap="round"/></svg></div>
-          <h4>Fast & Optimized</h4>
-          <p>Careful engineering to minimize CPU & memory overhead while keeping execution latencies near-zero.</p>
-        </div>
-
-        <div class="card" role="article">
-          <div class="icon-wrap"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect width="18" height="12" x="3" y="6" rx="2" stroke="currentColor" stroke-opacity="0.12"/></svg></div>
-          <h4>Tabbed Script Editor</h4>
-          <p>Switch between scripts without losing state — multi-tab editing with syntax highlighting and autosave.</p>
-        </div>
-
-        <div class="card" role="article">
-          <div class="icon-wrap"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v6" stroke="currentColor" stroke-opacity="0.12" stroke-width="1.6"/></svg></div>
-          <h4>No Key System</h4>
-          <p>Direct access — no key servers, no redirects. Launch and play instantly.</p>
-        </div>
-
-        <div class="card" role="article">
-          <div class="icon-wrap"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12h18" stroke="currentColor" stroke-opacity="0.12" stroke-width="1.6"/></svg></div>
-          <h4>Frequent Updates</h4>
-          <p>Continuous improvements and security patches — keeping you compatible with platform changes.</p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- flying cats container -->
-  <div class="flying-layer" id="flyingLayer" aria-hidden="true"></div>
-
-  <footer>
-    <div>&copy; 2025 Meow. Use responsibly.</div>
-  </footer>
-
-<script>
-(function(){
-  // Logo fallback: if MeowLogo.png fails to load, replace <img> with text-only logo
-  const logoImg = document.getElementById('meowLogo');
-  logoImg.addEventListener('error', function(){
-    const wrap = document.getElementById('logoWrap');
-    // if image fails, remove it and add fallback SVG/text
-    if(logoImg.parentNode){
-      logoImg.parentNode.removeChild(logoImg);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meow Executor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --bg: #070707;
+      --accent: #ff44cc;
+      --accent-light: #ff77ee;
+      --text: #fff;
+      --card-bg: rgba(255, 255, 255, 0.05);
     }
-    const fallback = document.createElement('div');
-    fallback.style.display = 'inline-flex';
-    fallback.style.alignItems = 'center';
-    fallback.style.gap = '10px';
-    fallback.innerHTML = '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" style="filter:drop-shadow(0 6px 18px rgba(255,20,147,0.12))"><circle cx="12" cy="12" r="10" fill="#111"/></svg>';
-    wrap.insertBefore(fallback, wrap.firstChild);
-  });
 
-  // flying cats: spawn random emojis occasionally
-  const layer = document.getElementById('flyingLayer');
-  const cats = ['🐱','🐈','🐈‍⬛']; // set of emojis
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  function rand(min,max){ return Math.random()*(max-min)+min; }
-  function spawnCat(){
-    if(prefersReduced) return;
-    const el = document.createElement('div');
-    el.className = 'f-cat';
-    const emoji = cats[Math.floor(Math.random()*cats.length)];
-    el.textContent = emoji;
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Orbitron', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
 
-    // starting side: left or right or top
-    const side = Math.random() < 0.5 ? 'left' : 'right';
-    const startY = rand(10, 70); // viewport %
-    const endY = startY + rand(-8, 8);
-    const travelX = side === 'left' ? (window.innerWidth + 200) : (-200);
-    const startX = side === 'left' ? -80 : window.innerWidth + 80;
-    const duration = rand(3000, 6500);
-    const delay = 0;
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 20px;
+    }
 
-    // apply initial position
-    el.style.top = startY + 'vh';
-    el.style.left = (side === 'left' ? '-8vw' : '100vw');
-    el.style.opacity = '0';
-    el.style.transform = `translate3d(0,0,0) scale(${rand(0.85,1.08)}) rotate(${rand(-12,12)}deg)`;
+    header img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px var(--accent));
+    }
 
-    layer.appendChild(el);
+    header h1 {
+      font-size: 2rem;
+      text-shadow: 0 0 20px var(--accent);
+      color: var(--accent-light);
+    }
 
-    // animate with JS for more natural curves (bezier)
-    const start = performance.now();
-    function frame(now){
-      const t = Math.min(1, (now - start) / duration);
-      // ease in-out
-      const ease = (t<.5) ? (2*t*t) : (-1 + (4-2*t)*t);
-      const x = startX + (travelX - startX) * ease;
-      const y = (startY + (endY - startY) * ease) * (window.innerHeight/100);
-      el.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${1 - (0.06*ease)}) rotate(${(ease*20*(side==='left'?1:-1)).toFixed(1)}deg)`;
-      el.style.opacity = Math.min(1, ease*2);
-      if(t < 1){
-        requestAnimationFrame(frame);
-      } else {
-        // fade out and remove
-        el.style.transition = 'opacity .6s ease, transform .6s ease';
-        el.style.opacity = '0';
-        setTimeout(()=>{ if(el.parentNode) el.parentNode.removeChild(el); }, 650);
+    .hero {
+      text-align: center;
+      margin-top: 40px;
+      padding: 0 20px;
+    }
+
+    .hero h2 {
+      font-size: 2rem;
+      color: var(--accent-light);
+      text-shadow: 0 0 20px var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      opacity: 0.8;
+      margin-bottom: 30px;
+    }
+
+    .download-btn {
+      display: inline-block;
+      padding: 14px 30px;
+      border: 2px solid var(--accent);
+      border-radius: 50px;
+      color: var(--text);
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: 600;
+      background: radial-gradient(circle at top left, var(--accent), transparent);
+      box-shadow: 0 0 20px var(--accent-light);
+      transition: all 0.3s ease;
+    }
+
+    .download-btn:hover {
+      background: var(--accent);
+      color: black;
+      transform: scale(1.05);
+      box-shadow: 0 0 30px var(--accent);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(255, 68, 204, 0.1);
+    }
+
+    .card:hover {
+      box-shadow: 0 0 25px rgba(255, 68, 204, 0.4);
+      transform: translateY(-5px);
+    }
+
+    .card svg {
+      width: 40px;
+      height: 40px;
+      stroke: var(--accent);
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      color: var(--accent-light);
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 10px;
+      opacity: 0.6;
+      font-size: 0.8rem;
+    }
+
+    /* Flying Cats */
+    .cat {
+      position: fixed;
+      top: 0;
+      font-size: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 999;
+      animation: fly 5s linear forwards;
+    }
+
+    @keyframes fly {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--x), var(--y)) rotate(360deg);
+        opacity: 0;
       }
     }
-    requestAnimationFrame(frame);
-  }
 
-  // spawn randomly every 2.5 - 6.5 seconds
-  let spawnTimer = setInterval(function(){
-    // small chance to spawn multiple sometimes
-    spawnCat();
-    if(Math.random() < 0.18) setTimeout(spawnCat, 300);
-  }, 2800 + Math.random()*3200);
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
 
-  // do one immediate spawn on load (subtle)
-  setTimeout(spawnCat, 900);
+      .hero h2 {
+        font-size: 1.5rem;
+      }
 
-  // cleanup when leaving page
-  window.addEventListener('beforeunload', function(){ clearInterval(spawnTimer); });
+      .download-btn {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="MeowLogo.png" alt="Meow Logo" onerror="this.style.display='none'">
+    <h1>Meow Executor</h1>
+  </header>
 
-})();
-</script>
+  <section class="hero">
+    <h2>Play with Zero Stress</h2>
+    <p>Our advanced anti-cheat bypass ensures you stay completely undetected.</p>
+    <a class="download-btn" href="https://mega.nz/file/PlBz3Y6Y#PqAhO-Bf2UfSgghMemQdnrctrLgJBgmWRj0Ezheayuw" target="_blank">Download</a>
+  </section>
+
+  <section class="cards">
+    <div class="card">
+      <i data-lucide="shield"></i>
+      <h3>Best Byfron Hyperion Bypass</h3>
+      <p>Stay undetected with industry-leading protection and stability.</p>
+    </div>
+    <div class="card">
+      <i data-lucide="cpu"></i>
+      <h3>Fast, Optimized, and Stable</h3>
+      <p>No delays, no lag — just smooth, consistent performance every time.</p>
+    </div>
+    <div class="card">
+      <i data-lucide="layout"></i>
+      <h3>User-Friendly Interface</h3>
+      <p>Simple and intuitive — even a cat could use it (and so can you).</p>
+    </div>
+    <div class="card">
+      <i data-lucide="code"></i>
+      <h3>Beautiful Tabbed Script Editor</h3>
+      <p>Work efficiently with a clean and organized editor layout.</p>
+    </div>
+    <div class="card">
+      <i data-lucide="key"></i>
+      <h3>No Key System</h3>
+      <p>Instant access — no waiting, no extra steps, just launch and play.</p>
+    </div>
+    <div class="card">
+      <i data-lucide="refresh-cw"></i>
+      <h3>Frequent Updates</h3>
+      <p>Stay current with regular updates and continuous improvements.</p>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Meow Executor. All rights reserved.
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    const cats = ["🐱", "🐈", "🐈‍⬛"];
+    function spawnCat() {
+      const cat = document.createElement("div");
+      cat.classList.add("cat");
+      cat.textContent = cats[Math.floor(Math.random() * cats.length)];
+
+      const startX = Math.random() * window.innerWidth;
+      const startY = Math.random() * window.innerHeight;
+      const moveX = (Math.random() - 0.5) * 800;
+      const moveY = (Math.random() - 0.5) * 400;
+
+      cat.style.left = `${startX}px`;
+      cat.style.top = `${startY}px`;
+      cat.style.setProperty("--x", `${moveX}px`);
+      cat.style.setProperty("--y", `${moveY}px`);
+
+      document.body.appendChild(cat);
+      setTimeout(() => cat.remove(), 5000);
+    }
+
+    setInterval(spawnCat, 7000 + Math.random() * 4000);
+  </script>
 </body>
 </html>
