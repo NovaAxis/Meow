@@ -6,8 +6,241 @@
   <title>Meow Executor 🐱</title>
   <meta name="description" content="Fast, secure, and sleek Roblox executor built with Saturn API (Xeno)." />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
   <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0f;
+      color: #e0e0e0;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(138, 43, 226, 0.15), transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(75, 0, 130, 0.15), transparent 50%);
+      z-index: -1;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 5%;
+      background: rgba(15, 15, 25, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+    }
+
+    .logo h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #8a2be2, #9370db);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #8a2be2;
+    }
+
+    main {
+      padding: 2rem 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 5rem 0;
+    }
+
+    .hero h2 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #fff, #8a2be2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #b0b0b0;
+      margin-bottom: 2rem;
+    }
+
+    .hero p a {
+      color: #8a2be2;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 1rem 2.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, #8a2be2, #9370db);
+      color: white;
+    }
+
+    .btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(138, 43, 226, 0.4);
+    }
+
+    .btn.secondary {
+      background: transparent;
+      border: 2px solid #8a2be2;
+      color: #8a2be2;
+    }
+
+    .btn.secondary:hover {
+      background: rgba(138, 43, 226, 0.1);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin: 4rem 0;
+    }
+
+    .feature {
+      background: rgba(20, 20, 30, 0.6);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      transition: all 0.3s;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+      border-color: rgba(138, 43, 226, 0.5);
+      box-shadow: 0 8px 20px rgba(138, 43, 226, 0.2);
+    }
+
+    .feature i {
+      width: 48px;
+      height: 48px;
+      color: #8a2be2;
+      margin-bottom: 1rem;
+    }
+
+    .feature h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .feature p {
+      color: #b0b0b0;
+    }
+
+    .terms {
+      background: rgba(20, 20, 30, 0.6);
+      padding: 3rem;
+      border-radius: 12px;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      margin: 4rem 0;
+    }
+
+    .terms h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #fff;
+    }
+
+    .terms p {
+      margin-bottom: 1rem;
+      color: #b0b0b0;
+      line-height: 1.8;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(15, 15, 25, 0.8);
+      border-top: 1px solid rgba(138, 43, 226, 0.3);
+      margin-top: 4rem;
+    }
+
+    footer a {
+      color: #8a2be2;
+      text-decoration: none;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+
+    @media (max-width: 768px) {
+      .hero h2 {
+        font-size: 2rem;
+      }
+
+      nav {
+        gap: 1rem;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="background"></div>
@@ -48,7 +281,12 @@
       <div class="feature">
         <i data-lucide="layout"></i>
         <h3>Clean UI</h3>
-        <p>Beautiful tabbed script editor for comfort and simplicity.</p>
+        <p>Beautiful Script Editor for comfort and script hub and settings.</p>
+      </div>
+      <div class="feature">
+        <i data-lucide="gauge"></i>
+        <h3>Almost High UNC</h3>
+        <p>84% UNC • 41% sUNC – Powerful script compatibility with regular updates.</p>
       </div>
     </section>
 
@@ -56,6 +294,8 @@
       <h2>Terms of Use</h2>
       <p>By downloading or using Meow Executor, you agree to use it for educational and testing purposes only. 
       The developers are not responsible for misuse or account restrictions. Features may change at any time.</p>
+      <p>You must be 13+ years old to use this software. Do not use on accounts you value. We recommend using alternate accounts for testing.</p>
+      <p>This software may trigger anti-cheat systems. Your account may be flagged, warned, or permanently banned by Roblox.</p>
       <p>Use responsibly. This software is provided "as is" without warranty of any kind.</p>
     </section>
   </main>
@@ -64,6 +304,27 @@
     <p>&copy; 2025 Meow Executor — Built with <a href="https://discord.gg/CR4U2mrSCE" target="_blank">Saturn API (Xeno)</a></p>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // Fade-in animation on scroll
+    document.addEventListener("scroll", () => {
+      const fadeEls = document.querySelectorAll(".fade-in");
+      fadeEls.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          el.style.opacity = "1";
+          el.style.transform = "translateY(0)";
+        }
+      });
+    });
+
+    // Initial load animation
+    window.addEventListener("load", () => {
+      document.querySelector("header").style.opacity = "1";
+      document.querySelector("header").style.transform = "translateY(0)";
+    });
+
+    // Load lucide icons
+    lucide.createIcons();
+  </script>
 </body>
 </html>
