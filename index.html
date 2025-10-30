@@ -219,6 +219,145 @@
       color: #fff;
     }
 
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: rgba(20, 20, 30, 0.95);
+      border: 1px solid rgba(255, 192, 203, 0.3);
+      border-radius: 16px;
+      max-width: 700px;
+      width: 90%;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-header {
+      padding: 2rem 2rem 1rem 2rem;
+      border-bottom: 1px solid rgba(255, 192, 203, 0.2);
+    }
+
+    .modal-header h2 {
+      color: #ffc0cb;
+      font-size: 1.8rem;
+      margin: 0;
+    }
+
+    .modal-body {
+      padding: 2rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-body h3 {
+      color: #ffc0cb;
+      font-size: 1.2rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-body h3:first-child {
+      margin-top: 0;
+    }
+
+    .modal-body p {
+      color: #b0b0b0;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .modal-body p strong {
+      color: #fff;
+    }
+
+    .modal-footer {
+      padding: 1.5rem 2rem;
+      border-top: 1px solid rgba(255, 192, 203, 0.2);
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: #ffc0cb;
+    }
+
+    .checkbox-container label {
+      color: #e0e0e0;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 1rem;
+      border-radius: 8px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1rem;
+    }
+
+    .modal-btn.cancel {
+      background: rgba(255, 255, 255, 0.1);
+      color: #e0e0e0;
+    }
+
+    .modal-btn.cancel:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .modal-btn.confirm {
+      background: linear-gradient(135deg, #ffc0cb, #ffb3c1);
+      color: white;
+    }
+
+    .modal-btn.confirm:disabled {
+      background: #444;
+      color: #888;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    .modal-btn.confirm:not(:disabled):hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 192, 203, 0.4);
+    }
+
     footer {
       text-align: center;
       padding: 2rem;
@@ -273,7 +412,7 @@
       <h2>The Fastest and Safest Executor</h2>
       <p>Stable • Optimized • Undetectable — powered by <a href="https://discord.gg/CR4U2mrSCE" target="_blank">Saturn API (Xeno)</a>.</p>
       <div class="buttons">
-        <a href="https://www.mediafire.com/file/r7rw4rjscohdkzv/Meow_0.0.9.zip/file" class="btn primary" target="_blank">Download</a>
+        <a href="#" class="btn primary" id="downloadBtn">Download</a>
         <a href="https://discord.gg/WYyANHBgbZ" class="btn secondary" target="_blank">Join Discord</a>
       </div>
     </section>
@@ -292,7 +431,7 @@
       <div class="feature">
         <i data-lucide="layout"></i>
         <h3>Clean UI</h3>
-        <p>Beautiful Script Editor for comfort and Script hub and settings.</p>
+        <p>Beautiful Script Editor for comfort and script hub and settings.</p>
       </div>
       <div class="feature">
         <i data-lucide="gauge"></i>
@@ -336,7 +475,101 @@
     <p>&copy; 2025 Meow Executor — Built with <a href="https://discord.gg/CR4U2mrSCE" target="_blank">Saturn API (Xeno)</a></p>
   </footer>
 
+  <!-- Terms Modal -->
+  <div class="modal" id="termsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Terms of Use</h2>
+      </div>
+      <div class="modal-body">
+        <p>By downloading, installing, or using the Meow Executor software ("the Software"), you explicitly acknowledge and agree to the following terms and conditions. If you do not agree with these terms, you are prohibited from using the Software.</p>
+        
+        <h3>1. Acceptable Use Policy</h3>
+        <p>The Software is intended strictly for educational, research, and ethical testing purposes within the Roblox platform. Acceptable use includes, but is not limited to:</p>
+        <p>・Learning about game mechanics and scripting in controlled, private environments.<br>
+        ・Academic research into software security and automation.<br>
+        ・Testing your own private Roblox experiences where you have explicit ownership and permission.</p>
+        
+        <h3>2. High Risk of Account Penalties</h3>
+        <p><strong>THIS SOFTWARE IS NOT UNDETECTABLE AND MAY TRIGGER ANTI-CHEAT SYSTEMS.</strong> The use of any third-party automation or script execution tool is a direct violation of the Roblox Terms of Service. You acknowledge and accept the following risks:</p>
+        <p>・Your Roblox account may be immediately flagged for suspicious activity.<br>
+        ・Your account may receive a formal warning or a temporary suspension.<br>
+        ・Your account may be permanently banned without the possibility of appeal.<br>
+        ・The developer is not responsible for any lost value, virtual items (Robux, limiteds, etc.), or status associated with a restricted or banned account.</p>
+        
+        <h3>3. No Warranty and Liability Disclaimer</h3>
+        <p>The Software is provided on an "as is" and "as available" basis without any warranties or guarantees. The developer explicitly disclaims all warranties, express or implied, including warranties of merchantability, fitness for a particular purpose, and non-infringement. The developer shall not be held liable for any damages arising from your use or inability to use the Software.</p>
+        
+        <h3>4. Intellectual Property and "Meow" Brand</h3>
+        <p>The name "Meow" and the Software are independent creations and are not affiliated with, sponsored by, or endorsed by Roblox Corporation.</p>
+        <p>The "Meow" brand, logo, and the Software itself are not trademarked. All related code and assets are provided as-is without any proprietary claims. The developer retains the right to the provided software but does not hold any trademark registrations for the "Meow" name.</p>
+        
+        <h3>5. Software Changes and Updates</h3>
+        <p>The Software may be updated, modified, or discontinued at any time without prior notice. As a solo developer, I reserve the right to make these changes at my discretion.</p>
+        
+        <p><strong>By proceeding, you confirm that you have read, understood, and accepted all the points outlined above. Use at your own risk and with full responsibility for the consequences.</strong></p>
+      </div>
+      <div class="modal-footer">
+        <div class="checkbox-container">
+          <input type="checkbox" id="agreeCheckbox">
+          <label for="agreeCheckbox">I have read and agree to the Terms of Use</label>
+        </div>
+        <div class="modal-buttons">
+          <button class="modal-btn cancel" id="cancelBtn">Cancel</button>
+          <button class="modal-btn confirm" id="confirmBtn" disabled>Download Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // Modal elements
+    const modal = document.getElementById('termsModal');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const confirmBtn = document.getElementById('confirmBtn');
+    const agreeCheckbox = document.getElementById('agreeCheckbox');
+    const downloadUrl = 'https://www.mediafire.com/file/r7rw4rjscohdkzv/Meow_0.0.9.zip/file';
+
+    // Open modal
+    downloadBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+
+    // Close modal
+    cancelBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+      agreeCheckbox.checked = false;
+      confirmBtn.disabled = true;
+    });
+
+    // Close modal on background click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        agreeCheckbox.checked = false;
+        confirmBtn.disabled = true;
+      }
+    });
+
+    // Enable/disable confirm button based on checkbox
+    agreeCheckbox.addEventListener('change', () => {
+      confirmBtn.disabled = !agreeCheckbox.checked;
+    });
+
+    // Confirm and download
+    confirmBtn.addEventListener('click', () => {
+      window.open(downloadUrl, '_blank');
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+      agreeCheckbox.checked = false;
+      confirmBtn.disabled = true;
+    });
+
     // Fade-in animation on scroll
     document.addEventListener("scroll", () => {
       const fadeEls = document.querySelectorAll(".fade-in");
