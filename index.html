@@ -1,1 +1,595 @@
-<script language=JavaScript> html='%3C%21DOCTYPE%20html%3E%0D%0A%3Chtml%20lang%3D%22en%22%3E%0D%0A%3Chead%3E%0D%0A%20%20%3Cmeta%20charset%3D%22utf-8%22%20%2F%3E%0D%0A%20%20%3Cmeta%20name%3D%22viewport%22%20content%3D%22width%3Ddevice-width%2Cinitial-scale%3D1%22%20%2F%3E%0D%0A%20%20%3Ctitle%3EMeow%20Executor%20%F0%9F%90%B1%3C%2Ftitle%3E%0D%0A%20%20%3Cmeta%20name%3D%22description%22%20content%3D%22Fast%2C%20secure%2C%20and%20sleek%20Roblox%20executor%20built%20with%20Saturn%20API%20%28Xeno%29.%22%20%2F%3E%0D%0A%20%20%3Clink%20href%3D%22https%3A%2F%2Ffonts.googleapis.com%2Fcss2%3Ffamily%3DInter%3Awght%40300%3B400%3B600%3B800%26display%3Dswap%22%20rel%3D%22stylesheet%22%3E%0D%0A%20%20%3Cscript%20src%3D%22https%3A%2F%2Funpkg.com%2Flucide%40latest%22%3E%3C%2Fscript%3E%0D%0A%20%20%3Cstyle%3E%0D%0A%20%20%20%20%2A%20%7B%0D%0A%20%20%20%20%20%20margin%3A%200%3B%0D%0A%20%20%20%20%20%20padding%3A%200%3B%0D%0A%20%20%20%20%20%20box-sizing%3A%20border-box%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20body%20%7B%0D%0A%20%20%20%20%20%20font-family%3A%20%27Inter%27%2C%20sans-serif%3B%0D%0A%20%20%20%20%20%20background%3A%20%230a0a0f%3B%0D%0A%20%20%20%20%20%20color%3A%20%23e0e0e0%3B%0D%0A%20%20%20%20%20%20overflow-x%3A%20hidden%3B%0D%0A%20%20%20%20%20%20line-height%3A%201.6%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.background%20%7B%0D%0A%20%20%20%20%20%20position%3A%20fixed%3B%0D%0A%20%20%20%20%20%20top%3A%200%3B%0D%0A%20%20%20%20%20%20left%3A%200%3B%0D%0A%20%20%20%20%20%20width%3A%20100%25%3B%0D%0A%20%20%20%20%20%20height%3A%20100%25%3B%0D%0A%20%20%20%20%20%20background%3A%20radial-gradient%28circle%20at%2020%25%2050%25%2C%20rgba%28255%2C%20192%2C%20203%2C%200.15%29%2C%20transparent%2050%25%29%2C%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20radial-gradient%28circle%20at%2080%25%2080%25%2C%20rgba%28255%2C%20192%2C%20203%2C%200.2%29%2C%20transparent%2050%25%29%3B%0D%0A%20%20%20%20%20%20z-index%3A%20-1%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20header%20%7B%0D%0A%20%20%20%20%20%20display%3A%20flex%3B%0D%0A%20%20%20%20%20%20justify-content%3A%20space-between%3B%0D%0A%20%20%20%20%20%20align-items%3A%20center%3B%0D%0A%20%20%20%20%20%20padding%3A%201.5rem%205%25%3B%0D%0A%20%20%20%20%20%20background%3A%20rgba%2815%2C%2015%2C%2025%2C%200.8%29%3B%0D%0A%20%20%20%20%20%20backdrop-filter%3A%20blur%2810px%29%3B%0D%0A%20%20%20%20%20%20border-bottom%3A%201px%20solid%20rgba%28255%2C%20192%2C%20203%2C%200.3%29%3B%0D%0A%20%20%20%20%20%20position%3A%20sticky%3B%0D%0A%20%20%20%20%20%20top%3A%200%3B%0D%0A%20%20%20%20%20%20z-index%3A%20100%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.logo%20%7B%0D%0A%20%20%20%20%20%20display%3A%20flex%3B%0D%0A%20%20%20%20%20%20align-items%3A%20center%3B%0D%0A%20%20%20%20%20%20gap%3A%201rem%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.logo%20img%20%7B%0D%0A%20%20%20%20%20%20width%3A%2040px%3B%0D%0A%20%20%20%20%20%20height%3A%2040px%3B%0D%0A%20%20%20%20%20%20border-radius%3A%208px%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.logo%20h1%20%7B%0D%0A%20%20%20%20%20%20font-size%3A%201.5rem%3B%0D%0A%20%20%20%20%20%20font-weight%3A%20800%3B%0D%0A%20%20%20%20%20%20background%3A%20linear-gradient%28135deg%2C%20%23ffc0cb%2C%20%23ffb3c1%29%3B%0D%0A%20%20%20%20%20%20-webkit-background-clip%3A%20text%3B%0D%0A%20%20%20%20%20%20-webkit-text-fill-color%3A%20transparent%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20nav%20%7B%0D%0A%20%20%20%20%20%20display%3A%20flex%3B%0D%0A%20%20%20%20%20%20gap%3A%202rem%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20nav%20a%20%7B%0D%0A%20%20%20%20%20%20color%3A%20%23e0e0e0%3B%0D%0A%20%20%20%20%20%20text-decoration%3A%20none%3B%0D%0A%20%20%20%20%20%20font-weight%3A%20500%3B%0D%0A%20%20%20%20%20%20transition%3A%20color%200.3s%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20nav%20a%3Ahover%20%7B%0D%0A%20%20%20%20%20%20color%3A%20%23ffc0cb%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20main%20%7B%0D%0A%20%20%20%20%20%20padding%3A%202rem%205%25%3B%0D%0A%20%20%20%20%20%20max-width%3A%201200px%3B%0D%0A%20%20%20%20%20%20margin%3A%200%20auto%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.hero%20%7B%0D%0A%20%20%20%20%20%20text-align%3A%20center%3B%0D%0A%20%20%20%20%20%20padding%3A%205rem%200%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.hero%20h2%20%7B%0D%0A%20%20%20%20%20%20font-size%3A%203rem%3B%0D%0A%20%20%20%20%20%20font-weight%3A%20800%3B%0D%0A%20%20%20%20%20%20margin-bottom%3A%201rem%3B%0D%0A%20%20%20%20%20%20background%3A%20linear-gradient%28135deg%2C%20%23fff%2C%20%23ffc0cb%29%3B%0D%0A%20%20%20%20%20%20-webkit-background-clip%3A%20text%3B%0D%0A%20%20%20%20%20%20-webkit-text-fill-color%3A%20transparent%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.hero%20p%20%7B%0D%0A%20%20%20%20%20%20font-size%3A%201.2rem%3B%0D%0A%20%20%20%20%20%20color%3A%20%23b0b0b0%3B%0D%0A%20%20%20%20%20%20margin-bottom%3A%202rem%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.hero%20p%20a%20%7B%0D%0A%20%20%20%20%20%20color%3A%20%23ffc0cb%3B%0D%0A%20%20%20%20%20%20text-decoration%3A%20none%3B%0D%0A%20%20%20%20%20%20font-weight%3A%20600%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.buttons%20%7B%0D%0A%20%20%20%20%20%20display%3A%20flex%3B%0D%0A%20%20%20%20%20%20gap%3A%201rem%3B%0D%0A%20%20%20%20%20%20justify-content%3A%20center%3B%0D%0A%20%20%20%20%20%20flex-wrap%3A%20wrap%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.btn%20%7B%0D%0A%20%20%20%20%20%20padding%3A%201rem%202.5rem%3B%0D%0A%20%20%20%20%20%20border-radius%3A%208px%3B%0D%0A%20%20%20%20%20%20text-decoration%3A%20none%3B%0D%0A%20%20%20%20%20%20font-weight%3A%20600%3B%0D%0A%20%20%20%20%20%20transition%3A%20all%200.3s%3B%0D%0A%20%20%20%20%20%20display%3A%20inline-block%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.btn.primary%20%7B%0D%0A%20%20%20%20%20%20background%3A%20linear-gradient%28135deg%2C%20%23ffc0cb%2C%20%23ffb3c1%29%3B%0D%0A%20%20%20%20%20%20color%3A%20white%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.btn.primary%3Ahover%20%7B%0D%0A%20%20%20%20%20%20transform%3A%20translateY%28-2px%29%3B%0D%0A%20%20%20%20%20%20box-shadow%3A%200%208px%2020px%20rgba%28255%2C%20192%2C%20203%2C%200.4%29%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.btn.secondary%20%7B%0D%0A%20%20%20%20%20%20background%3A%20transparent%3B%0D%0A%20%20%20%20%20%20border%3A%202px%20solid%20%23ffc0cb%3B%0D%0A%20%20%20%20%20%20color%3A%20%23ffc0cb%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.btn.secondary%3Ahover%20%7B%0D%0A%20%20%20%20%20%20background%3A%20rgba%28255%2C%20192%2C%20203%2C%200.1%29%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.features%20%7B%0D%0A%20%20%20%20%20%20display%3A%20grid%3B%0D%0A%20%20%20%20%20%20grid-template-columns%3A%20repeat%28auto-fit%2C%20minmax%28250px%2C%201fr%29%29%3B%0D%0A%20%20%20%20%20%20gap%3A%202rem%3B%0D%0A%20%20%20%20%20%20margin%3A%204rem%200%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.feature%20%7B%0D%0A%20%20%20%20%20%20background%3A%20rgba%2820%2C%2020%2C%2030%2C%200.6%29%3B%0D%0A%20%20%20%20%20%20padding%3A%202rem%3B%0D%0A%20%20%20%20%20%20border-radius%3A%2012px%3B%0D%0A%20%20%20%20%20%20border%3A%201px%20solid%20rgba%28255%2C%20192%2C%20203%2C%200.2%29%3B%0D%0A%20%20%20%20%20%20transition%3A%20all%200.3s%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.feature%3Ahover%20%7B%0D%0A%20%20%20%20%20%20transform%3A%20translateY%28-5px%29%3B%0D%0A%20%20%20%20%20%20border-color%3A%20rgba%28255%2C%20192%2C%20203%2C%200.5%29%3B%0D%0A%20%20%20%20%20%20box-shadow%3A%200%208px%2020px%20rgba%28255%2C%20192%2C%20203%2C%200.2%29%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.feature%20i%20%7B%0D%0A%20%20%20%20%20%20width%3A%2048px%3B%0D%0A%20%20%20%20%20%20height%3A%2048px%3B%0D%0A%20%20%20%20%20%20color%3A%20%23ffc0cb%3B%0D%0A%20%20%20%20%20%20margin-bottom%3A%201rem%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.feature%20h3%20%7B%0D%0A%20%20%20%20%20%20font-size%3A%201.3rem%3B%0D%0A%20%20%20%20%20%20margin-bottom%3A%200.5rem%3B%0D%0A%20%20%20%20%20%20color%3A%20%23fff%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.feature%20p%20%7B%0D%0A%20%20%20%20%20%20color%3A%20%23b0b0b0%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.terms%20%7B%0D%0A%20%20%20%20%20%20background%3A%20rgba%2820%2C%2020%2C%2030%2C%200.6%29%3B%0D%0A%20%20%20%20%20%20padding%3A%203rem%3B%0D%0A%20%20%20%20%20%20border-radius%3A%2012px%3B%0D%0A%20%20%20%20%20%20border%3A%201px%20solid%20rgba%28255%2C%20192%2C%20203%2C%200.2%29%3B%0D%0A%20%20%20%20%20%20margin%3A%204rem%200%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.terms%20h2%20%7B%0D%0A%20%20%20%20%20%20font-size%3A%202rem%3B%0D%0A%20%20%20%20%20%20margin-bottom%3A%201.5rem%3B%0D%0A%20%20%20%20%20%20color%3A%20%23fff%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.terms%20h3%20%7B%0D%0A%20%20%20%20%20%20font-size%3A%201.4rem%3B%0D%0A%20%20%20%20%20%20margin-top%3A%202rem%3B%0D%0A%20%20%20%20%20%20margin-bottom%3A%201rem%3B%0D%0A%20%20%20%20%20%20color%3A%20%23ffc0cb%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.terms%20p%20%7B%0D%0A%20%20%20%20%20%20margin-bottom%3A%201rem%3B%0D%0A%20%20%20%20%20%20color%3A%20%23b0b0b0%3B%0D%0A%20%20%20%20%20%20line-height%3A%201.8%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.terms%20p%20strong%20%7B%0D%0A%20%20%20%20%20%20color%3A%20%23fff%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20%2F%2A%20Modal%20Styles%20%2A%2F%0D%0A%20%20%20%20.modal%20%7B%0D%0A%20%20%20%20%20%20display%3A%20none%3B%0D%0A%20%20%20%20%20%20position%3A%20fixed%3B%0D%0A%20%20%20%20%20%20top%3A%200%3B%0D%0A%20%20%20%20%20%20left%3A%200%3B%0D%0A%20%20%20%20%20%20width%3A%20100%25%3B%0D%0A%20%20%20%20%20%20height%3A%20100%25%3B%0D%0A%20%20%20%20%20%20background%3A%20rgba%280%2C%200%2C%200%2C%200.85%29%3B%0D%0A%20%20%20%20%20%20backdrop-filter%3A%20blur%285px%29%3B%0D%0A%20%20%20%20%20%20z-index%3A%201000%3B%0D%0A%20%20%20%20%20%20align-items%3A%20center%3B%0D%0A%20%20%20%20%20%20justify-content%3A%20center%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.modal.active%20%7B%0D%0A%20%20%20%20%20%20display%3A%20flex%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.modal-content%20%7B%0D%0A%20%20%20%20%20%20background%3A%20rgba%2820%2C%2020%2C%2030%2C%200.95%29%3B%0D%0A%20%20%20%20%20%20border%3A%201px%20solid%20rgba%28255%2C%20192%2C%20203%2C%200.3%29%3B%0D%0A%20%20%20%20%20%20border-radius%3A%2016px%3B%0D%0A%20%20%20%20%20%20max-width%3A%20700px%3B%0D%0A%20%20%20%20%20%20width%3A%2090%25%3B%0D%0A%20%20%20%20%20%20max-height%3A%2080vh%3B%0D%0A%20%20%20%20%20%20display%3A%20flex%3B%0D%0A%20%20%20%20%20%20flex-direction%3A%20column%3B%0D%0A%20%20%20%20%20%20box-shadow%3A%200%2020px%2060px%20rgba%280%2C%200%2C%200%2C%200.5%29%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.modal-header%20%7B%0D%0A%20%20%20%20%20%20padding%3A%202rem%202rem%201rem%202rem%3B%0D%0A%20%20%20%20%20%20border-bottom%3A%201px%20solid%20rgba%28255%2C%20192%2C%20203%2C%200.2%29%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.modal-header%20h2%20%7B%0D%0A%20%20%20%20%20%20color%3A%20%23ffc0cb%3B%0D%0A%20%20%20%20%20%20font-size%3A%201.8rem%3B%0D%0A%20%20%20%20%20%20margin%3A%200%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.modal-body%20%7B%0D%0A%20%20%20%20%20%20padding%3A%202rem%3B%0D%0A%20%20%20%20%20%20overflow-y%3A%20auto%3B%0D%0A%20%20%20%20%20%20flex%3A%201%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.modal-body%20h3%20%7B%0D%0A%20%20%20%20%20%20color%3A%20%23ffc0cb%3B%0D%0A%20%20%20%20%20%20font-size%3A%201.2rem%3B%0D%0A%20%20%20%20%20%20margin-top%3A%201.5rem%3B%0D%0A%20%20%20%20%20%20margin-bottom%3A%200.5rem%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.modal-body%20h3%3Afirst-child%20%7B%0D%0A%20%20%20%20%20%20margin-top%3A%200%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.modal-body%20p%20%7B%0D%0A%20%20%20%20%20%20color%3A%20%23b0b0b0%3B%0D%0A%20%20%20%20%20%20line-height%3A%201.7%3B%0D%0A%20%20%20%20%20%20margin-bottom%3A%201rem%3B%0D%0A%20%20%20%20%20%20font-size%3A%200.95rem%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.modal-body%20p%20strong%20%7B%0D%0A%20%20%20%20%20%20color%3A%20%23fff%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.modal-footer%20%7B%0D%0A%20%20%20%20%20%20padding%3A%201.5rem%202rem%3B%0D%0A%20%20%20%20%20%20border-top%3A%201px%20solid%20rgba%28255%2C%20192%2C%20203%2C%200.2%29%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.checkbox-container%20%7B%0D%0A%20%20%20%20%20%20display%3A%20flex%3B%0D%0A%20%20%20%20%20%20align-items%3A%20center%3B%0D%0A%20%20%20%20%20%20gap%3A%200.8rem%3B%0D%0A%20%20%20%20%20%20margin-bottom%3A%201.5rem%3B%0D%0A%20%20%20%20%20%20cursor%3A%20pointer%3B%0D%0A%20%20%20%20%20%20user-select%3A%20none%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.checkbox-container%20input%5Btype%3D%22checkbox%22%5D%20%7B%0D%0A%20%20%20%20%20%20width%3A%2020px%3B%0D%0A%20%20%20%20%20%20height%3A%2020px%3B%0D%0A%20%20%20%20%20%20cursor%3A%20pointer%3B%0D%0A%20%20%20%20%20%20accent-color%3A%20%23ffc0cb%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.checkbox-container%20label%20%7B%0D%0A%20%20%20%20%20%20color%3A%20%23e0e0e0%3B%0D%0A%20%20%20%20%20%20cursor%3A%20pointer%3B%0D%0A%20%20%20%20%20%20font-size%3A%201rem%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.modal-buttons%20%7B%0D%0A%20%20%20%20%20%20display%3A%20flex%3B%0D%0A%20%20%20%20%20%20gap%3A%201rem%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.modal-btn%20%7B%0D%0A%20%20%20%20%20%20flex%3A%201%3B%0D%0A%20%20%20%20%20%20padding%3A%201rem%3B%0D%0A%20%20%20%20%20%20border-radius%3A%208px%3B%0D%0A%20%20%20%20%20%20border%3A%20none%3B%0D%0A%20%20%20%20%20%20font-weight%3A%20600%3B%0D%0A%20%20%20%20%20%20cursor%3A%20pointer%3B%0D%0A%20%20%20%20%20%20transition%3A%20all%200.3s%3B%0D%0A%20%20%20%20%20%20font-size%3A%201rem%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.modal-btn.cancel%20%7B%0D%0A%20%20%20%20%20%20background%3A%20rgba%28255%2C%20255%2C%20255%2C%200.1%29%3B%0D%0A%20%20%20%20%20%20color%3A%20%23e0e0e0%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.modal-btn.cancel%3Ahover%20%7B%0D%0A%20%20%20%20%20%20background%3A%20rgba%28255%2C%20255%2C%20255%2C%200.15%29%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.modal-btn.confirm%20%7B%0D%0A%20%20%20%20%20%20background%3A%20linear-gradient%28135deg%2C%20%23ffc0cb%2C%20%23ffb3c1%29%3B%0D%0A%20%20%20%20%20%20color%3A%20white%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.modal-btn.confirm%3Adisabled%20%7B%0D%0A%20%20%20%20%20%20background%3A%20%23444%3B%0D%0A%20%20%20%20%20%20color%3A%20%23888%3B%0D%0A%20%20%20%20%20%20cursor%3A%20not-allowed%3B%0D%0A%20%20%20%20%20%20opacity%3A%200.5%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.modal-btn.confirm%3Anot%28%3Adisabled%29%3Ahover%20%7B%0D%0A%20%20%20%20%20%20transform%3A%20translateY%28-2px%29%3B%0D%0A%20%20%20%20%20%20box-shadow%3A%200%208px%2020px%20rgba%28255%2C%20192%2C%20203%2C%200.4%29%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20footer%20%7B%0D%0A%20%20%20%20%20%20text-align%3A%20center%3B%0D%0A%20%20%20%20%20%20padding%3A%202rem%3B%0D%0A%20%20%20%20%20%20background%3A%20rgba%2815%2C%2015%2C%2025%2C%200.8%29%3B%0D%0A%20%20%20%20%20%20border-top%3A%201px%20solid%20rgba%28255%2C%20192%2C%20203%2C%200.3%29%3B%0D%0A%20%20%20%20%20%20margin-top%3A%204rem%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20footer%20a%20%7B%0D%0A%20%20%20%20%20%20color%3A%20%23ffc0cb%3B%0D%0A%20%20%20%20%20%20text-decoration%3A%20none%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20.fade-in%20%7B%0D%0A%20%20%20%20%20%20opacity%3A%200%3B%0D%0A%20%20%20%20%20%20transform%3A%20translateY%2820px%29%3B%0D%0A%20%20%20%20%20%20transition%3A%20opacity%200.6s%2C%20transform%200.6s%3B%0D%0A%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20%40media%20%28max-width%3A%20768px%29%20%7B%0D%0A%20%20%20%20%20%20.hero%20h2%20%7B%0D%0A%20%20%20%20%20%20%20%20font-size%3A%202rem%3B%0D%0A%20%20%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20%20%20nav%20%7B%0D%0A%20%20%20%20%20%20%20%20gap%3A%201rem%3B%0D%0A%20%20%20%20%20%20%7D%0D%0A%0D%0A%20%20%20%20%20%20.features%20%7B%0D%0A%20%20%20%20%20%20%20%20grid-template-columns%3A%201fr%3B%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%7D%0D%0A%20%20%3C%2Fstyle%3E%0D%0A%3C%2Fhead%3E%0D%0A%3Cbody%3E%0D%0A%20%20%3Cdiv%20class%3D%22background%22%3E%3C%2Fdiv%3E%0D%0A%0D%0A%20%20%3Cheader%20class%3D%22fade-in%22%3E%0D%0A%20%20%20%20%3Cdiv%20class%3D%22logo%22%3E%0D%0A%20%20%20%20%20%20%3Cimg%20src%3D%22MeowLogo.png%22%20alt%3D%22Meow%20logo%22%3E%0D%0A%20%20%20%20%20%20%3Ch1%3EMeow%20Executor%3C%2Fh1%3E%0D%0A%20%20%20%20%3C%2Fdiv%3E%0D%0A%20%20%20%20%3Cnav%3E%0D%0A%20%20%20%20%20%20%3Ca%20href%3D%22%23features%22%3EFeatures%3C%2Fa%3E%0D%0A%20%20%20%20%20%20%3Ca%20href%3D%22%23terms%22%3ETerms%3C%2Fa%3E%0D%0A%20%20%20%20%20%20%3Ca%20href%3D%22https%3A%2F%2Fdiscord.gg%2FWYyANHBgbZ%22%20target%3D%22_blank%22%3EJoin%20our%20Discord%3C%2Fa%3E%0D%0A%20%20%20%20%3C%2Fnav%3E%0D%0A%20%20%3C%2Fheader%3E%0D%0A%0D%0A%20%20%3Cmain%3E%0D%0A%20%20%20%20%3Csection%20class%3D%22hero%20fade-in%22%3E%0D%0A%20%20%20%20%20%20%3Ch2%3EThe%20Fastest%20and%20Safest%20Executor%3C%2Fh2%3E%0D%0A%20%20%20%20%20%20%3Cp%3EStable%20%E2%80%A2%20Optimized%20%E2%80%A2%20Undetectable%20%E2%80%94%20powered%20by%20%3Ca%20href%3D%22https%3A%2F%2Fdiscord.gg%2FCR4U2mrSCE%22%20target%3D%22_blank%22%3ESaturn%20API%20%28Xeno%29%3C%2Fa%3E.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22buttons%22%3E%0D%0A%20%20%20%20%20%20%20%20%3Ca%20href%3D%22%23%22%20class%3D%22btn%20primary%22%20id%3D%22downloadBtn%22%3EDownload%3C%2Fa%3E%0D%0A%20%20%20%20%20%20%20%20%3Ca%20href%3D%22https%3A%2F%2Fdiscord.gg%2FWYyANHBgbZ%22%20class%3D%22btn%20secondary%22%20target%3D%22_blank%22%3EJoin%20Discord%3C%2Fa%3E%0D%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0D%0A%20%20%20%20%3C%2Fsection%3E%0D%0A%0D%0A%20%20%20%20%3Csection%20id%3D%22features%22%20class%3D%22features%20fade-in%22%3E%0D%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22feature%22%3E%0D%0A%20%20%20%20%20%20%20%20%3Ci%20data-lucide%3D%22shield%22%3E%3C%2Fi%3E%0D%0A%20%20%20%20%20%20%20%20%3Ch3%3EBypass%20Anti-Cheat%3C%2Fh3%3E%0D%0A%20%20%20%20%20%20%20%20%3Cp%3EAdvanced%20bypass%20Anti-cheat%20Hyperion%20Byfron.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0D%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22feature%22%3E%0D%0A%20%20%20%20%20%20%20%20%3Ci%20data-lucide%3D%22zap%22%3E%3C%2Fi%3E%0D%0A%20%20%20%20%20%20%20%20%3Ch3%3ELightning%20Fast%3C%2Fh3%3E%0D%0A%20%20%20%20%20%20%20%20%3Cp%3EInstant%20script%20execution%20with%20minimal%20CPU%20and%20memory%20usage.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0D%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22feature%22%3E%0D%0A%20%20%20%20%20%20%20%20%3Ci%20data-lucide%3D%22layout%22%3E%3C%2Fi%3E%0D%0A%20%20%20%20%20%20%20%20%3Ch3%3EClean%20UI%3C%2Fh3%3E%0D%0A%20%20%20%20%20%20%20%20%3Cp%3EBeautiful%20Script%20Editor%20for%20comfort%20and%20script%20hub%20and%20settings.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0D%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22feature%22%3E%0D%0A%20%20%20%20%20%20%20%20%3Ci%20data-lucide%3D%22gauge%22%3E%3C%2Fi%3E%0D%0A%20%20%20%20%20%20%20%20%3Ch3%3EAlmost%20High%20UNC%3C%2Fh3%3E%0D%0A%20%20%20%20%20%20%20%20%3Cp%3E84%25%20UNC%20%E2%80%A2%2041%25%20sUNC%20%E2%80%93%20Powerful%20script%20compatibility%20with%20regular%20updates.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0D%0A%20%20%20%20%3C%2Fsection%3E%0D%0A%0D%0A%20%20%20%20%3Csection%20id%3D%22terms%22%20class%3D%22terms%20fade-in%22%3E%0D%0A%20%20%20%20%20%20%3Ch2%3ETerms%20of%20Use%3C%2Fh2%3E%0D%0A%20%20%20%20%20%20%3Cp%3EBy%20downloading%2C%20installing%2C%20or%20using%20the%20Meow%20Executor%20software%20%28%22the%20Software%22%29%2C%20you%20explicitly%20acknowledge%20and%20agree%20to%20the%20following%20terms%20and%20conditions.%20If%20you%20do%20not%20agree%20with%20these%20terms%2C%20you%20are%20prohibited%20from%20using%20the%20Software.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%0D%0A%20%20%20%20%20%20%3Ch3%3E1.%20Acceptable%20Use%20Policy%3C%2Fh3%3E%0D%0A%20%20%20%20%20%20%3Cp%3EThe%20Software%20is%20intended%20strictly%20for%20educational%2C%20research%2C%20and%20ethical%20testing%20purposes%20within%20the%20Roblox%20platform.%20Acceptable%20use%20includes%2C%20but%20is%20not%20limited%20to%3A%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%3Cp%3E%E3%83%BBLearning%20about%20game%20mechanics%20and%20scripting%20in%20controlled%2C%20private%20environments.%3Cbr%3E%0D%0A%20%20%20%20%20%20%E3%83%BBAcademic%20research%20into%20software%20security%20and%20automation.%3Cbr%3E%0D%0A%20%20%20%20%20%20%E3%83%BBTesting%20your%20own%20private%20Roblox%20experiences%20where%20you%20have%20explicit%20ownership%20and%20permission.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%0D%0A%20%20%20%20%20%20%3Ch3%3E2.%20High%20Risk%20of%20Account%20Penalties%3C%2Fh3%3E%0D%0A%20%20%20%20%20%20%3Cp%3E%3Cstrong%3ETHIS%20SOFTWARE%20IS%20NOT%20UNDETECTABLE%20AND%20MAY%20TRIGGER%20ANTI-CHEAT%20SYSTEMS.%3C%2Fstrong%3E%20The%20use%20of%20any%20third-party%20automation%20or%20script%20execution%20tool%20is%20a%20direct%20violation%20of%20the%20Roblox%20Terms%20of%20Service.%20You%20acknowledge%20and%20accept%20the%20following%20risks%3A%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%3Cp%3E%E3%83%BBYour%20Roblox%20account%20may%20be%20immediately%20flagged%20for%20suspicious%20activity.%3Cbr%3E%0D%0A%20%20%20%20%20%20%E3%83%BBYour%20account%20may%20receive%20a%20formal%20warning%20or%20a%20temporary%20suspension.%3Cbr%3E%0D%0A%20%20%20%20%20%20%E3%83%BBYour%20account%20may%20be%20permanently%20banned%20without%20the%20possibility%20of%20appeal.%3Cbr%3E%0D%0A%20%20%20%20%20%20%E3%83%BBThe%20developer%20is%20not%20responsible%20for%20any%20lost%20value%2C%20virtual%20items%20%28Robux%2C%20limiteds%2C%20etc.%29%2C%20or%20status%20associated%20with%20a%20restricted%20or%20banned%20account.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%0D%0A%20%20%20%20%20%20%3Ch3%3E3.%20No%20Warranty%20and%20Liability%20Disclaimer%3C%2Fh3%3E%0D%0A%20%20%20%20%20%20%3Cp%3EThe%20Software%20is%20provided%20on%20an%20%22as%20is%22%20and%20%22as%20available%22%20basis%20without%20any%20warranties%20or%20guarantees.%20The%20developer%20explicitly%20disclaims%20all%20warranties%2C%20express%20or%20implied%2C%20including%20warranties%20of%20merchantability%2C%20fitness%20for%20a%20particular%20purpose%2C%20and%20non-infringement.%20The%20developer%20shall%20not%20be%20held%20liable%20for%20any%20damages%20arising%20from%20your%20use%20or%20inability%20to%20use%20the%20Software.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%0D%0A%20%20%20%20%20%20%3Ch3%3E4.%20Intellectual%20Property%20and%20%22Meow%22%20Brand%3C%2Fh3%3E%0D%0A%20%20%20%20%20%20%3Cp%3EThe%20name%20%22Meow%22%20and%20the%20Software%20are%20independent%20creations%20and%20are%20not%20affiliated%20with%2C%20sponsored%20by%2C%20or%20endorsed%20by%20Roblox%20Corporation.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%3Cp%3EThe%20%22Meow%22%20brand%2C%20logo%2C%20and%20the%20Software%20itself%20are%20not%20trademarked.%20All%20related%20code%20and%20assets%20are%20provided%20as-is%20without%20any%20proprietary%20claims.%20The%20developer%20retains%20the%20right%20to%20the%20provided%20software%20but%20does%20not%20hold%20any%20trademark%20registrations%20for%20the%20%22Meow%22%20name.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%0D%0A%20%20%20%20%20%20%3Ch3%3E5.%20Software%20Changes%20and%20Updates%3C%2Fh3%3E%0D%0A%20%20%20%20%20%20%3Cp%3EThe%20Software%20may%20be%20updated%2C%20modified%2C%20or%20discontinued%20at%20any%20time%20without%20prior%20notice.%20As%20a%20solo%20developer%2C%20I%20reserve%20the%20right%20to%20make%20these%20changes%20at%20my%20discretion.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%0D%0A%20%20%20%20%20%20%3Cp%3E%3Cstrong%3EBy%20proceeding%2C%20you%20confirm%20that%20you%20have%20read%2C%20understood%2C%20and%20accepted%20all%20the%20points%20outlined%20above.%20Use%20at%20your%20own%20risk%20and%20with%20full%20responsibility%20for%20the%20consequences.%3C%2Fstrong%3E%3C%2Fp%3E%0D%0A%20%20%20%20%3C%2Fsection%3E%0D%0A%20%20%3C%2Fmain%3E%0D%0A%0D%0A%20%20%3Cfooter%3E%0D%0A%20%20%20%20%3Cp%3E%26copy%3B%202025%20Meow%20Executor%20%E2%80%94%20Built%20with%20%3Ca%20href%3D%22https%3A%2F%2Fdiscord.gg%2FCR4U2mrSCE%22%20target%3D%22_blank%22%3ESaturn%20API%20%28Xeno%29%3C%2Fa%3E%3C%2Fp%3E%0D%0A%20%20%3C%2Ffooter%3E%0D%0A%0D%0A%20%20%3C%21--%20Terms%20Modal%20--%3E%0D%0A%20%20%3Cdiv%20class%3D%22modal%22%20id%3D%22termsModal%22%3E%0D%0A%20%20%20%20%3Cdiv%20class%3D%22modal-content%22%3E%0D%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22modal-header%22%3E%0D%0A%20%20%20%20%20%20%20%20%3Ch2%3ETerms%20of%20Use%3C%2Fh2%3E%0D%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0D%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22modal-body%22%3E%0D%0A%20%20%20%20%20%20%20%20%3Cp%3EBy%20downloading%2C%20installing%2C%20or%20using%20the%20Meow%20Executor%20software%20%28%22the%20Software%22%29%2C%20you%20explicitly%20acknowledge%20and%20agree%20to%20the%20following%20terms%20and%20conditions.%20If%20you%20do%20not%20agree%20with%20these%20terms%2C%20you%20are%20prohibited%20from%20using%20the%20Software.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%20%20%0D%0A%20%20%20%20%20%20%20%20%3Ch3%3E1.%20Acceptable%20Use%20Policy%3C%2Fh3%3E%0D%0A%20%20%20%20%20%20%20%20%3Cp%3EThe%20Software%20is%20intended%20strictly%20for%20educational%2C%20research%2C%20and%20ethical%20testing%20purposes%20within%20the%20Roblox%20platform.%20Acceptable%20use%20includes%2C%20but%20is%20not%20limited%20to%3A%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%20%20%3Cp%3E%E3%83%BBLearning%20about%20game%20mechanics%20and%20scripting%20in%20controlled%2C%20private%20environments.%3Cbr%3E%0D%0A%20%20%20%20%20%20%20%20%E3%83%BBAcademic%20research%20into%20software%20security%20and%20automation.%3Cbr%3E%0D%0A%20%20%20%20%20%20%20%20%E3%83%BBTesting%20your%20own%20private%20Roblox%20experiences%20where%20you%20have%20explicit%20ownership%20and%20permission.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%20%20%0D%0A%20%20%20%20%20%20%20%20%3Ch3%3E2.%20High%20Risk%20of%20Account%20Penalties%3C%2Fh3%3E%0D%0A%20%20%20%20%20%20%20%20%3Cp%3E%3Cstrong%3ETHIS%20SOFTWARE%20IS%20NOT%20UNDETECTABLE%20AND%20MAY%20TRIGGER%20ANTI-CHEAT%20SYSTEMS.%3C%2Fstrong%3E%20The%20use%20of%20any%20third-party%20automation%20or%20script%20execution%20tool%20is%20a%20direct%20violation%20of%20the%20Roblox%20Terms%20of%20Service.%20You%20acknowledge%20and%20accept%20the%20following%20risks%3A%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%20%20%3Cp%3E%E3%83%BBYour%20Roblox%20account%20may%20be%20immediately%20flagged%20for%20suspicious%20activity.%3Cbr%3E%0D%0A%20%20%20%20%20%20%20%20%E3%83%BBYour%20account%20may%20receive%20a%20formal%20warning%20or%20a%20temporary%20suspension.%3Cbr%3E%0D%0A%20%20%20%20%20%20%20%20%E3%83%BBYour%20account%20may%20be%20permanently%20banned%20without%20the%20possibility%20of%20appeal.%3Cbr%3E%0D%0A%20%20%20%20%20%20%20%20%E3%83%BBThe%20developer%20is%20not%20responsible%20for%20any%20lost%20value%2C%20virtual%20items%20%28Robux%2C%20limiteds%2C%20etc.%29%2C%20or%20status%20associated%20with%20a%20restricted%20or%20banned%20account.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%20%20%0D%0A%20%20%20%20%20%20%20%20%3Ch3%3E3.%20No%20Warranty%20and%20Liability%20Disclaimer%3C%2Fh3%3E%0D%0A%20%20%20%20%20%20%20%20%3Cp%3EThe%20Software%20is%20provided%20on%20an%20%22as%20is%22%20and%20%22as%20available%22%20basis%20without%20any%20warranties%20or%20guarantees.%20The%20developer%20explicitly%20disclaims%20all%20warranties%2C%20express%20or%20implied%2C%20including%20warranties%20of%20merchantability%2C%20fitness%20for%20a%20particular%20purpose%2C%20and%20non-infringement.%20The%20developer%20shall%20not%20be%20held%20liable%20for%20any%20damages%20arising%20from%20your%20use%20or%20inability%20to%20use%20the%20Software.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%20%20%0D%0A%20%20%20%20%20%20%20%20%3Ch3%3E4.%20Intellectual%20Property%20and%20%22Meow%22%20Brand%3C%2Fh3%3E%0D%0A%20%20%20%20%20%20%20%20%3Cp%3EThe%20name%20%22Meow%22%20and%20the%20Software%20are%20independent%20creations%20and%20are%20not%20affiliated%20with%2C%20sponsored%20by%2C%20or%20endorsed%20by%20Roblox%20Corporation.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%20%20%3Cp%3EThe%20%22Meow%22%20brand%2C%20logo%2C%20and%20the%20Software%20itself%20are%20not%20trademarked.%20All%20related%20code%20and%20assets%20are%20provided%20as-is%20without%20any%20proprietary%20claims.%20The%20developer%20retains%20the%20right%20to%20the%20provided%20software%20but%20does%20not%20hold%20any%20trademark%20registrations%20for%20the%20%22Meow%22%20name.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%20%20%0D%0A%20%20%20%20%20%20%20%20%3Ch3%3E5.%20Software%20Changes%20and%20Updates%3C%2Fh3%3E%0D%0A%20%20%20%20%20%20%20%20%3Cp%3EThe%20Software%20may%20be%20updated%2C%20modified%2C%20or%20discontinued%20at%20any%20time%20without%20prior%20notice.%20As%20a%20solo%20developer%2C%20I%20reserve%20the%20right%20to%20make%20these%20changes%20at%20my%20discretion.%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%20%20%0D%0A%20%20%20%20%20%20%20%20%3Cp%3E%3Cstrong%3EBy%20proceeding%2C%20you%20confirm%20that%20you%20have%20read%2C%20understood%2C%20and%20accepted%20all%20the%20points%20outlined%20above.%20Use%20at%20your%20own%20risk%20and%20with%20full%20responsibility%20for%20the%20consequences.%3C%2Fstrong%3E%3C%2Fp%3E%0D%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0D%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22modal-footer%22%3E%0D%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22checkbox-container%22%3E%0D%0A%20%20%20%20%20%20%20%20%20%20%3Cinput%20type%3D%22checkbox%22%20id%3D%22agreeCheckbox%22%3E%0D%0A%20%20%20%20%20%20%20%20%20%20%3Clabel%20for%3D%22agreeCheckbox%22%3EI%20have%20read%20and%20agree%20to%20the%20Terms%20of%20Use%3C%2Flabel%3E%0D%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0D%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22modal-buttons%22%3E%0D%0A%20%20%20%20%20%20%20%20%20%20%3Cbutton%20class%3D%22modal-btn%20cancel%22%20id%3D%22cancelBtn%22%3ECancel%3C%2Fbutton%3E%0D%0A%20%20%20%20%20%20%20%20%20%20%3Cbutton%20class%3D%22modal-btn%20confirm%22%20id%3D%22confirmBtn%22%20disabled%3EDownload%20Now%3C%2Fbutton%3E%0D%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0D%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0D%0A%20%20%20%20%3C%2Fdiv%3E%0D%0A%20%20%3C%2Fdiv%3E%0D%0A%0D%0A%20%20%3Cscript%3E%0D%0A%20%20%20%20%2F%2F%20Modal%20elements%0D%0A%20%20%20%20const%20modal%20%3D%20document.getElementById%28%27termsModal%27%29%3B%0D%0A%20%20%20%20const%20downloadBtn%20%3D%20document.getElementById%28%27downloadBtn%27%29%3B%0D%0A%20%20%20%20const%20cancelBtn%20%3D%20document.getElementById%28%27cancelBtn%27%29%3B%0D%0A%20%20%20%20const%20confirmBtn%20%3D%20document.getElementById%28%27confirmBtn%27%29%3B%0D%0A%20%20%20%20const%20agreeCheckbox%20%3D%20document.getElementById%28%27agreeCheckbox%27%29%3B%0D%0A%20%20%20%20const%20downloadUrl%20%3D%20%27https%3A%2F%2Fwww.mediafire.com%2Ffile%2Fr7rw4rjscohdkzv%2FMeow_0.0.9.zip%2Ffile%27%3B%0D%0A%0D%0A%20%20%20%20%2F%2F%20Open%20modal%0D%0A%20%20%20%20downloadBtn.addEventListener%28%27click%27%2C%20%28e%29%20%3D%3E%20%7B%0D%0A%20%20%20%20%20%20e.preventDefault%28%29%3B%0D%0A%20%20%20%20%20%20modal.classList.add%28%27active%27%29%3B%0D%0A%20%20%20%20%20%20document.body.style.overflow%20%3D%20%27hidden%27%3B%0D%0A%20%20%20%20%7D%29%3B%0D%0A%0D%0A%20%20%20%20%2F%2F%20Close%20modal%0D%0A%20%20%20%20cancelBtn.addEventListener%28%27click%27%2C%20%28%29%20%3D%3E%20%7B%0D%0A%20%20%20%20%20%20modal.classList.remove%28%27active%27%29%3B%0D%0A%20%20%20%20%20%20document.body.style.overflow%20%3D%20%27auto%27%3B%0D%0A%20%20%20%20%20%20agreeCheckbox.checked%20%3D%20false%3B%0D%0A%20%20%20%20%20%20confirmBtn.disabled%20%3D%20true%3B%0D%0A%20%20%20%20%7D%29%3B%0D%0A%0D%0A%20%20%20%20%2F%2F%20Close%20modal%20on%20background%20click%0D%0A%20%20%20%20modal.addEventListener%28%27click%27%2C%20%28e%29%20%3D%3E%20%7B%0D%0A%20%20%20%20%20%20if%20%28e.target%20%3D%3D%3D%20modal%29%20%7B%0D%0A%20%20%20%20%20%20%20%20modal.classList.remove%28%27active%27%29%3B%0D%0A%20%20%20%20%20%20%20%20document.body.style.overflow%20%3D%20%27auto%27%3B%0D%0A%20%20%20%20%20%20%20%20agreeCheckbox.checked%20%3D%20false%3B%0D%0A%20%20%20%20%20%20%20%20confirmBtn.disabled%20%3D%20true%3B%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%7D%29%3B%0D%0A%0D%0A%20%20%20%20%2F%2F%20Enable%2Fdisable%20confirm%20button%20based%20on%20checkbox%0D%0A%20%20%20%20agreeCheckbox.addEventListener%28%27change%27%2C%20%28%29%20%3D%3E%20%7B%0D%0A%20%20%20%20%20%20confirmBtn.disabled%20%3D%20%21agreeCheckbox.checked%3B%0D%0A%20%20%20%20%7D%29%3B%0D%0A%0D%0A%20%20%20%20%2F%2F%20Confirm%20and%20download%0D%0A%20%20%20%20confirmBtn.addEventListener%28%27click%27%2C%20%28%29%20%3D%3E%20%7B%0D%0A%20%20%20%20%20%20window.open%28downloadUrl%2C%20%27_blank%27%29%3B%0D%0A%20%20%20%20%20%20modal.classList.remove%28%27active%27%29%3B%0D%0A%20%20%20%20%20%20document.body.style.overflow%20%3D%20%27auto%27%3B%0D%0A%20%20%20%20%20%20agreeCheckbox.checked%20%3D%20false%3B%0D%0A%20%20%20%20%20%20confirmBtn.disabled%20%3D%20true%3B%0D%0A%20%20%20%20%7D%29%3B%0D%0A%0D%0A%20%20%20%20%2F%2F%20Fade-in%20animation%20on%20scroll%0D%0A%20%20%20%20document.addEventListener%28%22scroll%22%2C%20%28%29%20%3D%3E%20%7B%0D%0A%20%20%20%20%20%20const%20fadeEls%20%3D%20document.querySelectorAll%28%22.fade-in%22%29%3B%0D%0A%20%20%20%20%20%20fadeEls.forEach%28el%20%3D%3E%20%7B%0D%0A%20%20%20%20%20%20%20%20const%20rect%20%3D%20el.getBoundingClientRect%28%29%3B%0D%0A%20%20%20%20%20%20%20%20if%20%28rect.top%20%3C%20window.innerHeight%20-%20100%29%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20el.style.opacity%20%3D%20%221%22%3B%0D%0A%20%20%20%20%20%20%20%20%20%20el.style.transform%20%3D%20%22translateY%280%29%22%3B%0D%0A%20%20%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%20%20%7D%29%3B%0D%0A%20%20%20%20%7D%29%3B%0D%0A%0D%0A%20%20%20%20%2F%2F%20Initial%20load%20animation%0D%0A%20%20%20%20window.addEventListener%28%22load%22%2C%20%28%29%20%3D%3E%20%7B%0D%0A%20%20%20%20%20%20document.querySelector%28%22header%22%29.style.opacity%20%3D%20%221%22%3B%0D%0A%20%20%20%20%20%20document.querySelector%28%22header%22%29.style.transform%20%3D%20%22translateY%280%29%22%3B%0D%0A%20%20%20%20%7D%29%3B%0D%0A%0D%0A%20%20%20%20%2F%2F%20Load%20lucide%20icons%0D%0A%20%20%20%20lucide.createIcons%28%29%3B%0D%0A%20%20%3C%2Fscript%3E%0D%0A%3C%2Fbody%3E%0D%0A%3C%2Fhtml%3E';d=unescape(html);document.write(d);</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Meow Executor 🐱</title>
+  <meta name="description" content="Fast, secure, and sleek Roblox executor built with Saturn API (Xeno)." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0f;
+      color: #e0e0e0;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(255, 192, 203, 0.15), transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(255, 192, 203, 0.2), transparent 50%);
+      z-index: -1;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 5%;
+      background: rgba(15, 15, 25, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 192, 203, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+    }
+
+    .logo h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffc0cb, #ffb3c1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #ffc0cb;
+    }
+
+    main {
+      padding: 2rem 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 5rem 0;
+    }
+
+    .hero h2 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #fff, #ffc0cb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #b0b0b0;
+      margin-bottom: 2rem;
+    }
+
+    .hero p a {
+      color: #ffc0cb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 1rem 2.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, #ffc0cb, #ffb3c1);
+      color: white;
+    }
+
+    .btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 192, 203, 0.4);
+    }
+
+    .btn.secondary {
+      background: transparent;
+      border: 2px solid #ffc0cb;
+      color: #ffc0cb;
+    }
+
+    .btn.secondary:hover {
+      background: rgba(255, 192, 203, 0.1);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin: 4rem 0;
+    }
+
+    .feature {
+      background: rgba(20, 20, 30, 0.6);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 192, 203, 0.2);
+      transition: all 0.3s;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 192, 203, 0.5);
+      box-shadow: 0 8px 20px rgba(255, 192, 203, 0.2);
+    }
+
+    .feature i {
+      width: 48px;
+      height: 48px;
+      color: #ffc0cb;
+      margin-bottom: 1rem;
+    }
+
+    .feature h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .feature p {
+      color: #b0b0b0;
+    }
+
+    .terms {
+      background: rgba(20, 20, 30, 0.6);
+      padding: 3rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 192, 203, 0.2);
+      margin: 4rem 0;
+    }
+
+    .terms h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #fff;
+    }
+
+    .terms h3 {
+      font-size: 1.4rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: #ffc0cb;
+    }
+
+    .terms p {
+      margin-bottom: 1rem;
+      color: #b0b0b0;
+      line-height: 1.8;
+    }
+
+    .terms p strong {
+      color: #fff;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: rgba(20, 20, 30, 0.95);
+      border: 1px solid rgba(255, 192, 203, 0.3);
+      border-radius: 16px;
+      max-width: 700px;
+      width: 90%;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-header {
+      padding: 2rem 2rem 1rem 2rem;
+      border-bottom: 1px solid rgba(255, 192, 203, 0.2);
+    }
+
+    .modal-header h2 {
+      color: #ffc0cb;
+      font-size: 1.8rem;
+      margin: 0;
+    }
+
+    .modal-body {
+      padding: 2rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-body h3 {
+      color: #ffc0cb;
+      font-size: 1.2rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-body h3:first-child {
+      margin-top: 0;
+    }
+
+    .modal-body p {
+      color: #b0b0b0;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .modal-body p strong {
+      color: #fff;
+    }
+
+    .modal-footer {
+      padding: 1.5rem 2rem;
+      border-top: 1px solid rgba(255, 192, 203, 0.2);
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: #ffc0cb;
+    }
+
+    .checkbox-container label {
+      color: #e0e0e0;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 1rem;
+      border-radius: 8px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1rem;
+    }
+
+    .modal-btn.cancel {
+      background: rgba(255, 255, 255, 0.1);
+      color: #e0e0e0;
+    }
+
+    .modal-btn.cancel:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .modal-btn.confirm {
+      background: linear-gradient(135deg, #ffc0cb, #ffb3c1);
+      color: white;
+    }
+
+    .modal-btn.confirm:disabled {
+      background: #444;
+      color: #888;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    .modal-btn.confirm:not(:disabled):hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 192, 203, 0.4);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(15, 15, 25, 0.8);
+      border-top: 1px solid rgba(255, 192, 203, 0.3);
+      margin-top: 4rem;
+    }
+
+    footer a {
+      color: #ffc0cb;
+      text-decoration: none;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+
+    @media (max-width: 768px) {
+      .hero h2 {
+        font-size: 2rem;
+      }
+
+      nav {
+        gap: 1rem;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+
+  <header class="fade-in">
+    <div class="logo">
+      <img src="MeowLogo.png" alt="Meow logo">
+      <h1>Meow Executor</h1>
+    </div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#terms">Terms</a>
+      <a href="https://discord.gg/WYyANHBgbZ" target="_blank">Join our Discord</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero fade-in">
+      <h2>The Fastest and Safest Executor</h2>
+      <p>Stable • Optimized • Undetectable — powered by <a href="https://discord.gg/CR4U2mrSCE" target="_blank">Saturn API (Xeno)</a>.</p>
+      <div class="buttons">
+        <a href="#" class="btn primary" id="downloadBtn">Download</a>
+        <a href="https://discord.gg/WYyANHBgbZ" class="btn secondary" target="_blank">Join Discord</a>
+      </div>
+    </section>
+
+    <section id="features" class="features fade-in">
+      <div class="feature">
+        <i data-lucide="shield"></i>
+        <h3>Bypass Anti-Cheat</h3>
+        <p>Advanced bypass Anti-cheat Hyperion Byfron.</p>
+      </div>
+      <div class="feature">
+        <i data-lucide="zap"></i>
+        <h3>Lightning Fast</h3>
+        <p>Instant script execution with minimal CPU and memory usage.</p>
+      </div>
+      <div class="feature">
+        <i data-lucide="layout"></i>
+        <h3>Clean UI</h3>
+        <p>Beautiful Script Editor for comfort and script hub and settings.</p>
+      </div>
+      <div class="feature">
+        <i data-lucide="gauge"></i>
+        <h3>Almost High UNC</h3>
+        <p>84% UNC • 41% sUNC – Powerful script compatibility with regular updates.</p>
+      </div>
+    </section>
+
+    <section id="terms" class="terms fade-in">
+      <h2>Terms of Use</h2>
+      <p>By downloading, installing, or using the Meow Executor software ("the Software"), you explicitly acknowledge and agree to the following terms and conditions. If you do not agree with these terms, you are prohibited from using the Software.</p>
+      
+      <h3>1. Acceptable Use Policy</h3>
+      <p>The Software is intended strictly for educational, research, and ethical testing purposes within the Roblox platform. Acceptable use includes, but is not limited to:</p>
+      <p>・Learning about game mechanics and scripting in controlled, private environments.<br>
+      ・Academic research into software security and automation.<br>
+      ・Testing your own private Roblox experiences where you have explicit ownership and permission.</p>
+      
+      <h3>2. High Risk of Account Penalties</h3>
+      <p><strong>THIS SOFTWARE IS NOT UNDETECTABLE AND MAY TRIGGER ANTI-CHEAT SYSTEMS.</strong> The use of any third-party automation or script execution tool is a direct violation of the Roblox Terms of Service. You acknowledge and accept the following risks:</p>
+      <p>・Your Roblox account may be immediately flagged for suspicious activity.<br>
+      ・Your account may receive a formal warning or a temporary suspension.<br>
+      ・Your account may be permanently banned without the possibility of appeal.<br>
+      ・The developer is not responsible for any lost value, virtual items (Robux, limiteds, etc.), or status associated with a restricted or banned account.</p>
+      
+      <h3>3. No Warranty and Liability Disclaimer</h3>
+      <p>The Software is provided on an "as is" and "as available" basis without any warranties or guarantees. The developer explicitly disclaims all warranties, express or implied, including warranties of merchantability, fitness for a particular purpose, and non-infringement. The developer shall not be held liable for any damages arising from your use or inability to use the Software.</p>
+      
+      <h3>4. Intellectual Property and "Meow" Brand</h3>
+      <p>The name "Meow" and the Software are independent creations and are not affiliated with, sponsored by, or endorsed by Roblox Corporation.</p>
+      <p>The "Meow" brand, logo, and the Software itself are not trademarked. All related code and assets are provided as-is without any proprietary claims. The developer retains the right to the provided software but does not hold any trademark registrations for the "Meow" name.</p>
+      
+      <h3>5. Software Changes and Updates</h3>
+      <p>The Software may be updated, modified, or discontinued at any time without prior notice. As a solo developer, I reserve the right to make these changes at my discretion.</p>
+      
+      <p><strong>By proceeding, you confirm that you have read, understood, and accepted all the points outlined above. Use at your own risk and with full responsibility for the consequences.</strong></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Meow Executor — Built with <a href="https://discord.gg/CR4U2mrSCE" target="_blank">Saturn API (Xeno)</a></p>
+  </footer>
+
+  <!-- Terms Modal -->
+  <div class="modal" id="termsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Terms of Use</h2>
+      </div>
+      <div class="modal-body">
+        <p>By downloading, installing, or using the Meow Executor software ("the Software"), you explicitly acknowledge and agree to the following terms and conditions. If you do not agree with these terms, you are prohibited from using the Software.</p>
+        
+        <h3>1. Acceptable Use Policy</h3>
+        <p>The Software is intended strictly for educational, research, and ethical testing purposes within the Roblox platform. Acceptable use includes, but is not limited to:</p>
+        <p>・Learning about game mechanics and scripting in controlled, private environments.<br>
+        ・Academic research into software security and automation.<br>
+        ・Testing your own private Roblox experiences where you have explicit ownership and permission.</p>
+        
+        <h3>2. High Risk of Account Penalties</h3>
+        <p><strong>THIS SOFTWARE IS NOT UNDETECTABLE AND MAY TRIGGER ANTI-CHEAT SYSTEMS.</strong> The use of any third-party automation or script execution tool is a direct violation of the Roblox Terms of Service. You acknowledge and accept the following risks:</p>
+        <p>・Your Roblox account may be immediately flagged for suspicious activity.<br>
+        ・Your account may receive a formal warning or a temporary suspension.<br>
+        ・Your account may be permanently banned without the possibility of appeal.<br>
+        ・The developer is not responsible for any lost value, virtual items (Robux, limiteds, etc.), or status associated with a restricted or banned account.</p>
+        
+        <h3>3. No Warranty and Liability Disclaimer</h3>
+        <p>The Software is provided on an "as is" and "as available" basis without any warranties or guarantees. The developer explicitly disclaims all warranties, express or implied, including warranties of merchantability, fitness for a particular purpose, and non-infringement. The developer shall not be held liable for any damages arising from your use or inability to use the Software.</p>
+        
+        <h3>4. Intellectual Property and "Meow" Brand</h3>
+        <p>The name "Meow" and the Software are independent creations and are not affiliated with, sponsored by, or endorsed by Roblox Corporation.</p>
+        <p>The "Meow" brand, logo, and the Software itself are not trademarked. All related code and assets are provided as-is without any proprietary claims. The developer retains the right to the provided software but does not hold any trademark registrations for the "Meow" name.</p>
+        
+        <h3>5. Software Changes and Updates</h3>
+        <p>The Software may be updated, modified, or discontinued at any time without prior notice. As a solo developer, I reserve the right to make these changes at my discretion.</p>
+        
+        <p><strong>By proceeding, you confirm that you have read, understood, and accepted all the points outlined above. Use at your own risk and with full responsibility for the consequences.</strong></p>
+      </div>
+      <div class="modal-footer">
+        <div class="checkbox-container">
+          <input type="checkbox" id="agreeCheckbox">
+          <label for="agreeCheckbox">I have read and agree to the Terms of Use</label>
+        </div>
+        <div class="modal-buttons">
+          <button class="modal-btn cancel" id="cancelBtn">Cancel</button>
+          <button class="modal-btn confirm" id="confirmBtn" disabled>Download Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Modal elements
+    const modal = document.getElementById('termsModal');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const confirmBtn = document.getElementById('confirmBtn');
+    const agreeCheckbox = document.getElementById('agreeCheckbox');
+    const downloadUrl = 'https://www.mediafire.com/file/r7rw4rjscohdkzv/Meow_0.0.9.zip/file';
+
+    // Open modal
+    downloadBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+
+    // Close modal
+    cancelBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+      agreeCheckbox.checked = false;
+      confirmBtn.disabled = true;
+    });
+
+    // Close modal on background click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        agreeCheckbox.checked = false;
+        confirmBtn.disabled = true;
+      }
+    });
+
+    // Enable/disable confirm button based on checkbox
+    agreeCheckbox.addEventListener('change', () => {
+      confirmBtn.disabled = !agreeCheckbox.checked;
+    });
+
+    // Confirm and download
+    confirmBtn.addEventListener('click', () => {
+      window.open(downloadUrl, '_blank');
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+      agreeCheckbox.checked = false;
+      confirmBtn.disabled = true;
+    });
+
+    // Fade-in animation on scroll
+    document.addEventListener("scroll", () => {
+      const fadeEls = document.querySelectorAll(".fade-in");
+      fadeEls.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          el.style.opacity = "1";
+          el.style.transform = "translateY(0)";
+        }
+      });
+    });
+
+    // Initial load animation
+    window.addEventListener("load", () => {
+      document.querySelector("header").style.opacity = "1";
+      document.querySelector("header").style.transform = "translateY(0)";
+    });
+
+    // Load lucide icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>
