@@ -47,29 +47,6 @@ document.addEventListener("mousemove", e => {
   glow.style.background = `radial-gradient(circle at ${e.clientX}px ${e.clientY}px, rgba(255,77,196,0.3), transparent 70%)`;
 });
 
-/* ====== FLYING CATS 🐱 ====== */
-const flyingLayer = document.getElementById("flyingLayer");
-const catImages = [
-  "https://cdn-icons-png.flaticon.com/512/616/616408.png",
-  "https://cdn-icons-png.flaticon.com/512/616/616430.png",
-  "https://cdn-icons-png.flaticon.com/512/616/616408.png"
-];
-
-function spawnCat() {
-  if (!flyingLayer) return;
-  const cat = document.createElement("img");
-  cat.src = catImages[Math.floor(Math.random() * catImages.length)];
-  cat.style.left = `${Math.random() * window.innerWidth}px`;
-  cat.style.top = `${Math.random() * window.innerHeight}px`;
-  cat.style.opacity = "0.8";
-  cat.style.transform = `rotate(${Math.random() * 360}deg) scale(${0.5 + Math.random() * 0.5})`;
-
-  flyingLayer.appendChild(cat);
-  setTimeout(() => flyingLayer.removeChild(cat), 8000);
-}
-
-setInterval(spawnCat, 4000);
-
 /* ====== DOWNLOAD BUTTON EFFECT ====== */
 const downloadBtn = document.getElementById("downloadBtn");
 if (downloadBtn) {
