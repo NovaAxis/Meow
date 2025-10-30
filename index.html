@@ -1,110 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Meow — The Best and Safest Executor</title>
-<meta name="description" content="Meow — fast, stable, and secure executor. Download now." />
-<meta name="keywords" content="Meow Executor, executor, Roblox, fast executor, secure executor">
-<link rel="icon" href="MeowLogo.png" type="image/png">
-<meta property="og:title" content="Meow Executor — Fast, Stable, Secure">
-<meta property="og:description" content="Download Meow Executor — fast and undetectable Roblox executor with zero key system.">
-<meta property="og:image" content="MeowLogo.png">
-<meta property="og:type" content="website">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest/dist/lucide.min.js"></script>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Meow — The Best and Safest Executor</title>
+  <meta name="description" content="Meow — fast, stable, and secure executor. Download now." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/lucide.min.js"></script>
 </head>
-
 <body>
   <div class="edge-glow" aria-hidden="true"></div>
   <div class="tiles" id="tiles" aria-hidden="true"></div>
 
-  <header>
-    <div class="logo">
-      <img id="meowLogo" src="MeowLogo.png" alt="Meow logo" loading="lazy">
-      <div>
-        <div class="brand">Meow</div>
-        <div class="tag">Fast • Stable • Secure</div>
-      </div>
-    </div>
-
-    <div class="header-actions">
-      <a class="small-link" href="https://discord.gg/CR4U2mrSCE" target="_blank" rel="noopener noreferrer">
-        API: Saturn Api (Xeno) • Discord
-      </a>
-      <a class="small-link" href="#comparison">Compare</a>
-    </div>
-  </header>
-
   <div class="wrap">
-    <main>
-      <section class="hero">
-        <div class="hero-left">
-          <h1 class="title">The Best and Safest Executor</h1>
-          <div class="subtitle">Fast, stable and built with privacy in mind. Get in, run scripts, and stay unseen.</div>
-
-          <div class="cta">
-            <a class="btn btn-primary" id="downloadBtn" href="https://www.mediafire.com/file/r7rw4rjscohdkzv/Meow_0.0.9.zip/file" target="_blank" rel="noopener noreferrer">
-              Download Meow
-            </a>
-            <a class="btn btn-ghost" href="#features">Features</a>
-          </div>
+    <header>
+      <div class="logo">
+        <img id="meowLogo" src="MeowLogo.png" alt="Meow logo">
+        <div>
+          <div class="brand">Meow</div>
+          <div class="tag">Fast • Stable • Secure</div>
         </div>
+      </div>
+      <nav class="nav">
+        <a href="#features">Features</a>
+        <a href="#comparison">Compare</a>
+        <a href="#terms">Terms</a>
+        <a href="https://discord.gg/WYyANHBgbZ" target="_blank" rel="noopener noreferrer">Join our Discord</a>
+      </nav>
+    </header>
 
-        <div class="hero-right">
-          <div class="version-card">
-            <div>Latest Version</div>
-            <strong>v0.0.9</strong>
-            <p>No key system • Frequent updates</p>
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-top">
+          <div class="hero-left">
+            <h1 id="hero-title" class="title">The Best and Safest Executor</h1>
+            <div class="subtitle">Fast, stable and built with privacy in mind. Get in, run scripts, and stay unseen.</div>
+            <div class="cta" style="margin-top:14px;">
+              <a class="btn btn-primary" id="downloadBtn" href="https://www.mediafire.com/file/r7rw4rjscohdkzv/Meow_0.0.9.zip/file" target="_blank" rel="noopener noreferrer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v11" stroke="#070707" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 11l4 4 4-4" stroke="#070707" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 21H3" stroke="#070707" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Download Meow
+              </a>
+              <a class="btn btn-ghost" href="https://discord.gg/WYyANHBgbZ" target="_blank" rel="noopener noreferrer">Join our Discord</a>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="features" class="features">
-        <div class="feature">
+      <section id="features" class="features" aria-label="features">
+        <div class="feature fade-in">
           <h4>Play with Zero Stress</h4>
           <p>Our advanced anti-cheat bypass ensures you stay completely undetected at all times.</p>
         </div>
-        <div class="feature">
+        <div class="feature fade-in">
           <h4>Simple & Intuitive Interface</h4>
           <p>Clean layout and tabbed editor — get started quickly without a steep learning curve.</p>
         </div>
-        <div class="feature">
+        <div class="feature fade-in">
           <h4>Fast, Optimized & Stable</h4>
           <p>Low CPU & memory usage, near-instant execution and smooth session performance.</p>
         </div>
       </section>
 
-      <section id="comparison" class="comparison">
-        <table class="cmp-table">
+      <section id="comparison" class="comparison" aria-label="comparison">
+        <table class="cmp-table" role="table" aria-label="comparison table">
           <thead>
             <tr><th></th><th>Meow</th><th>Regular Executor</th></tr>
           </thead>
           <tbody>
-            <tr><td>Best Byfron Hyperion Bypass</td><td>✓</td><td>✗</td></tr>
-            <tr><td>User-Friendly Interface</td><td>✓</td><td>✗</td></tr>
-            <tr><td>Fast & Optimized</td><td>✓</td><td>✗</td></tr>
-            <tr><td>No Key System</td><td>✓</td><td>✗</td></tr>
-            <tr><td>Frequent Updates</td><td>✓</td><td>✗</td></tr>
+            <tr><td>Best Byfron Hyperion Bypass</td><td class="check">✓</td><td class="cross">✗</td></tr>
+            <tr><td>User-Friendly Interface</td><td class="check">✓</td><td class="cross">✗</td></tr>
+            <tr><td>Fast, Optimized, and Stable</td><td class="check">✓</td><td class="cross">✗</td></tr>
+            <tr><td>Beautiful Tabbed Script Editor</td><td class="check">✓</td><td class="cross">✗</td></tr>
+            <tr><td>No Key System</td><td class="check">✓</td><td class="cross">✗</td></tr>
+            <tr><td>Frequent Updates</td><td class="check">✓</td><td class="cross">✗</td></tr>
           </tbody>
         </table>
+      </section>
+
+      <section class="cards" aria-label="deep dive">
+        <article class="card"><div class="icon"><svg data-lucide="shield" width="28" height="28"></svg></div><h5>Byfron Hyperion Bypass</h5><p>Proven techniques keep your sessions hidden from detection systems.</p></article>
+        <article class="card"><div class="icon"><svg data-lucide="layout" width="28" height="28"></svg></div><h5>User-Friendly Interface</h5><p>Tabbed editor, clear controls, and instant access — designed for simplicity.</p></article>
+        <article class="card"><div class="icon"><svg data-lucide="cpu" width="28" height="28"></svg></div><h5>Fast & Optimized</h5><p>Engineered for performance and low resource usage.</p></article>
+      </section>
+
+      <section id="terms" class="terms">
+        <h2>Terms of Use</h2>
+        <p>By downloading or using Meow, you agree to use it responsibly and only for educational or testing purposes. We are not responsible for any misuse, account bans, or violations of platform terms. Always respect others and play fair.</p>
+        <p>This software is provided “as is” without warranty of any kind. Features and functionality may change without notice.</p>
+      </section>
+
+      <section class="api-note">
+        <p>Powered by <a href="https://discord.gg/CR4U2mrSCE" target="_blank" rel="noopener noreferrer">Saturn API (Xeno)</a></p>
       </section>
     </main>
   </div>
 
-  <div class="flying-layer" id="flyingLayer"></div>
-
   <footer>
-    <p>&copy; 2025 Meow. Use responsibly.</p>
-    <p>
-      <a href="https://discord.gg/CR4U2mrSCE" target="_blank" rel="noopener noreferrer">Join our Discord</a> •
-      <a href="#">Privacy Policy</a> •
-      <a href="#">Terms</a>
-    </p>
+    &copy; 2025 Meow. Use responsibly. | <a href="#terms">Terms of Use</a>
   </footer>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
